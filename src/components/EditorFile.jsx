@@ -5,7 +5,8 @@ const EditorFile = (props) => {
     const { isDisabled, selectedFile, setShowEditor, editorContent, setEditorContent, editFile, createFile } = props
     return (
         <>
-            <h2>{selectedFile ? "Edit File" : "Create New File"}</h2>
+            <h3>{selectedFile ? "Edit File" : "Create New File"}</h3>
+            {selectedFile && <h4> {selectedFile?.fileName}</h4>}
             <ReactQuill
                 theme="snow"
                 value={editorContent}
