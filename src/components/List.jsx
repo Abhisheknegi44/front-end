@@ -13,7 +13,11 @@ const List = () => {
     try {
       const response = await axios.get("http://localhost:9000/api/fileUpload");
       setFileList(response.data.txtFile);
-      if (response.data.txtFile.length === 0) { setShowEditor(true) } else { setShowEditor(false) }
+      if (response.data.txtFile.length === 0) {
+        setShowEditor(true);
+      } else {
+        setShowEditor(false);
+      }
     } catch (error) {
       console.error("Error fetching files:", error);
     }
@@ -24,7 +28,9 @@ const List = () => {
     try {
       const formData = new FormData();
       const blob = new Blob([editorContent], { type: "text/plain" });
-      const file = new File([blob], `newFile${fileList.length + 1}.txt`, { type: "text/plain" });
+      const file = new File([blob], `newFile${fileList.length + 1}.txt`, {
+        type: "text/plain",
+      });
       formData.append("media", file);
       await axios.post("http://localhost:9000/api/fileUpload", formData, {
         headers: {
@@ -39,12 +45,14 @@ const List = () => {
     }
   };
 
-
   const editFile = async () => {
     try {
-      await axios.put(`http://localhost:9000/api/fileUpload/${selectedFile._id}`, {
-        content: editorContent,
-      });
+      await axios.put(
+        `http://localhost:9000/api/fileUpload/${selectedFile._id}`,
+        {
+          content: editorContent,
+        }
+      );
       fetchFiles();
       setShowEditor(false);
     } catch (error) {
@@ -65,7 +73,9 @@ const List = () => {
   };
 
   const openFile = async (file) => {
-    const response = await axios.get(`http://localhost:9000/api/fileUpload/files/${file._id}`);
+    const response = await axios.get(
+      `http://localhost:9000/api/fileUpload/files/${file._id}`
+    );
     setSelectedFile(file);
     setEditorContent(response.data.content);
     setShowEditor(true);
@@ -73,12 +83,14 @@ const List = () => {
   };
 
   const viewFile = async (file) => {
-    const response = await axios.get(`http://localhost:9000/api/fileUpload/files/${file._id}`);
+    const response = await axios.get(
+      `http://localhost:9000/api/fileUpload/files/${file._id}`
+    );
     setSelectedFile(file);
     setEditorContent(response.data.content);
     setShowEditor(true);
     setIsDisabled(true);
-  }
+  };
 
   const openEditorForNewFile = () => {
     setSelectedFile(null);
@@ -110,7 +122,10 @@ const List = () => {
                 >
                   View
                 </button>
-                <button onClick={() => openFile(file)} style={{ marginLeft: "10px" }}>
+                <button
+                  onClick={() => openFile(file)}
+                  style={{ marginLeft: "10px" }}
+                >
                   Edit
                 </button>
                 <button
@@ -123,7 +138,7 @@ const List = () => {
             ))}
           </ul>
         )}
-        <button onClick={openEditorForNewFile} style={{ marginTop: "10px", }}>
+        <button onClick={openEditorForNewFile} style={{ marginTop: "10px" }}>
           Create New File
         </button>
       </div>
@@ -136,13 +151,12 @@ const List = () => {
             setEditorContent={setEditorContent}
             editFile={editFile}
             createFile={createFile}
-            isDisabled={isDisabled} />
+            isDisabled={isDisabled}
+          />
         </div>
       )}
-    </div >
+    </div>
   );
 };
 
-
 export default List;
-
