@@ -23,7 +23,6 @@ const List = () => {
     }
   };
 
-
   const createFile = async () => {
     try {
       const formData = new FormData();
@@ -51,7 +50,7 @@ const List = () => {
         `http://localhost:9000/api/fileUpload/${selectedFile._id}`,
         {
           content: editorContent,
-        }
+        },
       );
       fetchFiles();
       setShowEditor(false);
@@ -74,7 +73,7 @@ const List = () => {
 
   const openFile = async (file) => {
     const response = await axios.get(
-      `http://localhost:9000/api/fileUpload/files/${file._id}`
+      `http://localhost:9000/api/fileUpload/files/${file._id}`,
     );
     setSelectedFile(file);
     setEditorContent(response.data.content);
@@ -84,7 +83,7 @@ const List = () => {
 
   const viewFile = async (file) => {
     const response = await axios.get(
-      `http://localhost:9000/api/fileUpload/files/${file._id}`
+      `http://localhost:9000/api/fileUpload/files/${file._id}`,
     );
     setSelectedFile(file);
     setEditorContent(response.data.content);
